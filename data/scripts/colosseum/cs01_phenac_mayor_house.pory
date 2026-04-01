@@ -1,0 +1,143 @@
+#include "constants/colosseum_cs01.h"
+
+const LOCALID_MAYOR = 1
+const LOCALID_MIROR_B = 2
+const LOCALID_FOLLY = 3
+const LOCALID_TRUDLY = 4
+const LOCALID_RED_GRUNT = 5
+const LOCALID_BLUE_GRUNT = 6
+const LOCALID_GREEN_GRUNT = 7
+
+mapscripts PhenacMayorHouse_MapScripts {
+    MAP_SCRIPT_ON_TRANSITION: PhenacMayorHouse_OnTransition
+}
+
+script PhenacMayorHouse_OnTransition {
+    if (flag(FLAG_COLO_CS01_OUTSKIRT_BALLS_RECEIVED) &&
+        !flag(FLAG_COLO_CS01_MIROR_B_SCENE_DONE)) {
+        lockall
+        goto(PhenacMayorHouse_EventScript_MirorBInvasion)
+    }
+    end
+}
+
+script PhenacMayorHouse_EventScript_Mayor {
+    lock
+    faceplayer
+
+    if (!flag(FLAG_COLO_CS01_MAYOR_MET)) {
+        msgbox(PhenacMayorHouse_Text_MayorFirstMeeting)
+        setflag(FLAG_COLO_CS01_MAYOR_MET)
+        setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_MAYOR_MET)
+        special(ColoContent_ApplyStep)
+        release
+        end
+    }
+
+    if (!flag(FLAG_COLO_CS01_STADIUM_CHECK_DONE)) {
+        msgbox(PhenacMayorHouse_Text_MayorReminderStadium)
+    } elif (!flag(FLAG_COLO_CS01_OUTSKIRT_BALLS_RECEIVED)) {
+        msgbox(PhenacMayorHouse_Text_MayorWaits)
+    } elif (flag(FLAG_COLO_CS01_MIROR_B_SCENE_DONE)) {
+        msgbox(PhenacMayorHouse_Text_MayorAfterInvasion)
+    } else {
+        msgbox(PhenacMayorHouse_Text_MayorWaitingForTrouble)
+    }
+
+    release
+    end
+}
+
+script PhenacMayorHouse_EventScript_MirorBInvasion {
+    msgbox(PhenacMayorHouse_Text_MirorBAppears)
+    applymovement(LOCALID_MIROR_B, moves(face_player, exclaim))
+    waitmovement(0)
+    msgbox(PhenacMayorHouse_Text_MirorBLeaves)
+    trainerbattle_double(
+        TRAINER_COLO_MIROR_B_PEON_FOLLY_MAYOR_HOUSE,
+        PhenacMayorHouse_Text_FollyRematchIntro,
+        PhenacMayorHouse_Text_FollyRematchDefeat,
+        PhenacMayorHouse_Text_NotEnoughMons,
+        PhenacMayorHouse_EventScript_AfterFollyRematch
+    )
+    end
+}
+
+script PhenacMayorHouse_EventScript_AfterFollyRematch {
+    lockall
+    setvar(VAR_COLO_CS01_SHADOW_HOOK, COLO_CS01_SHADOW_MAKUHITA)
+    special(ColoShadow_QueueEncounterHook)
+    trainerbattle_double(
+        TRAINER_COLO_MIROR_B_PEON_TRUDLY_MAYOR_HOUSE,
+        PhenacMayorHouse_Text_TrudlyIntro,
+        PhenacMayorHouse_Text_TrudlyDefeat,
+        PhenacMayorHouse_Text_NotEnoughMons,
+        PhenacMayorHouse_EventScript_AfterTrudly
+    )
+    end
+}
+
+script PhenacMayorHouse_EventScript_AfterTrudly {
+    lockall
+    if (!flag(FLAG_COLO_CS01_FIRST_SHADOW_CLEARED)) {
+        setflag(FLAG_COLO_CS01_FIRST_SHADOW_CLEARED)
+        setflag(FLAG_COLO_CS01_MIROR_B_SCENE_DONE)
+        setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_FIRST_SHADOW_CLEARED)
+        special(ColoContent_ApplyStep)
+    }
+    msgbox(PhenacMayorHouse_Text_AfterMakuhita)
+    releaseall
+    end
+}
+
+text PhenacMayorHouse_Text_MayorFirstMeeting {
+    format("So the girl was taken by rough-looking men?\nAnd those Pokemon had a strange aura...?\pGo see the stadium and tell me if anything there looks wrong.")
+}
+
+text PhenacMayorHouse_Text_MayorReminderStadium {
+    format("Please check the stadium first.\nSomething about all this troubles me.")
+}
+
+text PhenacMayorHouse_Text_MayorWaits {
+    format("If you're pursuing those crooks, be careful.\nPhenac is not as safe as it looks.")
+}
+
+text PhenacMayorHouse_Text_MayorWaitingForTrouble {
+    format("......\nSomething feels very wrong.")
+}
+
+text PhenacMayorHouse_Text_MirorBAppears {
+    format("Miror B. has invaded the mayor's house with Folly, Trudly, and three color-coded grunts.\nHe makes off with the mayor while the two peons stay behind.")
+}
+
+text PhenacMayorHouse_Text_MirorBLeaves {
+    format("Miror B. spins away with the red, blue, and green Cipher goons.\nFolly and Trudly block the path.")
+}
+
+text PhenacMayorHouse_Text_FollyRematchIntro {
+    format("This time we're not losing to you!\nI'll grind you down right here!")
+}
+
+text PhenacMayorHouse_Text_FollyRematchDefeat {
+    format("Wh-what?! Not again!")
+}
+
+text PhenacMayorHouse_Text_TrudlyIntro {
+    format("I'm ending this myself.\nTake on my Shadow Pokemon if you dare!")
+}
+
+text PhenacMayorHouse_Text_TrudlyDefeat {
+    format("Makuhita! How could you lose?!")
+}
+
+text PhenacMayorHouse_Text_AfterMakuhita {
+    format("Rui confirms it-Makuhita had the same dark aura.\nThe Snag List should now have its first real entry.")
+}
+
+text PhenacMayorHouse_Text_MayorAfterInvasion {
+    format("Those kidnappers fled toward the exits.\nPhenac's way out won't stay open unless you break their hold.")
+}
+
+text PhenacMayorHouse_Text_NotEnoughMons {
+    format("You need at least two battle-ready Pokemon to keep this fight going.")
+}
