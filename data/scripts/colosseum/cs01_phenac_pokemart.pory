@@ -1,0 +1,41 @@
+#include "constants/colosseum_cs01.h"
+
+const LOCALID_CLERK_DOWNSTAIRS = 1
+const LOCALID_HINT_NPC_UPSTAIRS = 2
+
+mapscripts PhenacPokeMart_MapScripts {}
+
+script PhenacPokeMart_EventScript_Clerk {
+    lock
+    faceplayer
+    msgbox(PhenacPokeMart_Text_NoBallSales)
+    release
+    end
+}
+
+script PhenacPokeMart_EventScript_HintNpc {
+    lock
+    faceplayer
+
+    if (!flag(FLAG_COLO_CS01_BALL_HINT_HEARD)) {
+        msgbox(PhenacPokeMart_Text_OrreHasNoWildMons)
+        setflag(FLAG_COLO_CS01_BALL_HINT_HEARD)
+    } else {
+        msgbox(PhenacPokeMart_Text_RepeatHint)
+    }
+
+    release
+    end
+}
+
+text PhenacPokeMart_Text_NoBallSales {
+    format("Poke Balls? Sorry.\nWe don't sell those here.")
+}
+
+text PhenacPokeMart_Text_OrreHasNoWildMons {
+    format("There aren't wild Pokemon roaming Orre the way there are in other regions.\nIf anyone still sells Poke Balls, it'd be the guy at Outskirt Stand.")
+}
+
+text PhenacPokeMart_Text_RepeatHint {
+    format("Outskirt Stand still handles Poke Balls.\nPhenac doesn't.")
+}
