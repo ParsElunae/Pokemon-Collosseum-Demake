@@ -1,0 +1,56 @@
+#include "constants/colosseum_cs01.h"
+
+const LOCALID_TEACHER = 1
+const LOCALID_JUSTY = 2
+
+mapscripts PrestigePreceptCenter_MapScripts {}
+
+script PrestigePreceptCenter_EventScript_Teacher {
+    lock
+    faceplayer
+
+    if (!flag(FLAG_COLO_CS01_RUI_FREED)) {
+        msgbox(PrestigePreceptCenter_Text_NoMemoYet)
+        release
+        end
+    }
+
+    if (!flag(FLAG_COLO_CS01_STRATEGY_MEMO_UNLOCKED)) {
+        msgbox(PrestigePreceptCenter_Text_StrategyMemoGrant)
+        setflag(FLAG_COLO_CS01_STRATEGY_MEMO_UNLOCKED)
+        setvar(VAR_COLO_CS01_PDA_HOOK, COLO_CS01_PDA_HOOK_STRATEGY_MEMO_UNLOCK)
+        special(ColoPda_ApplyHookFromVar)
+        release
+        end
+    }
+
+    msgbox(PrestigePreceptCenter_Text_StrategyMemoRefresh)
+    setvar(VAR_COLO_CS01_PDA_HOOK, COLO_CS01_PDA_HOOK_STRATEGY_MEMO_REFRESH)
+    special(ColoPda_ApplyHookFromVar)
+    release
+    end
+}
+
+script PrestigePreceptCenter_EventScript_Justy {
+    lock
+    faceplayer
+    msgbox(PrestigePreceptCenter_Text_JustyFlavor)
+    release
+    end
+}
+
+text PrestigePreceptCenter_Text_NoMemoYet {
+    format("Bring me someone with field experience and sightings to record.\nThen I'll upgrade your PDA.")
+}
+
+text PrestigePreceptCenter_Text_StrategyMemoGrant {
+    format("Your PDA can do more than hold mail.\nI'll add the Strategy Memo so you can record the Pokemon you've encountered.")
+}
+
+text PrestigePreceptCenter_Text_StrategyMemoRefresh {
+    format("Back for more data?\nI'll refresh the Strategy Memo with what you've seen so far.")
+}
+
+text PrestigePreceptCenter_Text_JustyFlavor {
+    format("This place can toughen you up, but the real trouble in Orre is outside the ring.")
+}
