@@ -1,0 +1,6 @@
+	.include "data/maps/OutskirtStand/scripts.inc"
+	.include "data/maps/PhenacCity/scripts.inc"
+	.include "data/maps/PhenacMayorHouse/scripts.inc"
+	.include "data/maps/PhenacStadium/scripts.inc"
+	.include "data/maps/PhenacPokeMart/scripts.inc"
+	.include "data/maps/PrestigePreceptCenter/scripts.inc"
