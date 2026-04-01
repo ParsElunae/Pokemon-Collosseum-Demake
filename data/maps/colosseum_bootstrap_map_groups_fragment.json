@@ -1,0 +1,11 @@
+{
+  "target_group": "gMapGroup_SpecialArea",
+  "append_maps": [
+    "OutskirtStand",
+    "PhenacCity",
+    "PhenacMayorHouse",
+    "PhenacStadium",
+    "PhenacPokeMart",
+    "PrestigePreceptCenter"
+  ]
+}
