@@ -536,6 +536,12 @@
     "UnionRoom"
   ],
   "gMapGroup_SpecialArea": [
+    "OutskirtStand",
+    "PhenacCity",
+    "PhenacMayorHouse",
+    "PhenacStadium",
+    "PhenacPokeMart",
+    "PrestigePreceptCenter",
     "SafariZone_Northwest",
     "SafariZone_North",
     "SafariZone_Southwest",
