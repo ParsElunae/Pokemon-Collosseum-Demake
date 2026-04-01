@@ -40,6 +40,7 @@ Each of those folders currently has:
 - runtime special functions have a first bootstrap implementation
 - Colosseum map scripts have a dedicated central include manifest
 - standalone Colosseum script spine exists as its own build-visible assembly file
+- the six CS01 bootstrap maps are already registered in `data/maps/map_groups.json`
 
 ### Still bootstrap / incomplete
 - final map layouts and tilesets are placeholder reuse
@@ -47,13 +48,22 @@ Each of those folders currently has:
 - full Shadow persistence/router is not finished yet
 - final travel UI integration is not finished yet
 - `.pory` authored sources are not yet the direct build path
-- map groups / core build-spine edits are still the main remaining integration hinge
+- first honest compile/test pass has still not happened yet
 
 ## Exact remaining core-file hinges
 These are the old repo files that still matter most for the bootstrap layer:
-- `data/maps/map_groups.json`
 - `data/specials.inc`
-- `data/event_scripts.s`
+- compile feedback from the first real build attempt
+
+`data/maps/map_groups.json` is already patched.
+`data/event_scripts.s` is no longer treated as a required hinge for this bootstrap pass.
+
+## Compile-path sanity result
+The repo now has a standalone Colosseum script spine in `data/colosseum_event_scripts.s`.
+That file already includes `data/scripts/colosseum/colosseum_map_scripts.inc`.
+
+Under the current Makefile, top-level `data/*.s` files are compiled automatically.
+That means the live build should already see the Colosseum map-script object without needing a direct include in `data/event_scripts.s`.
 
 ## Important project-file conflict note
 The uploaded loose CS01 files still appear to reflect the older Pyrite-unlock version of the slice.
@@ -62,7 +72,7 @@ Do not silently merge those two assumptions together.
 Surface and resolve that conflict explicitly in later passes.
 
 ## Immediate next recommended pass
-1. patch `data/maps/map_groups.json` so mapjson groups include the six Colosseum bootstrap maps
-2. patch `data/specials.inc` to include `data/scripts/colosseum/colosseum_specials.inc`
-3. decide whether `data/event_scripts.s` still needs a direct include once the standalone Colosseum script spine is compiled in practice
-4. then attempt the first real compile and see what unresolved symbols remain
+1. patch `data/specials.inc` to include `data/scripts/colosseum/colosseum_specials.inc`
+2. run the first real compile attempt
+3. inspect unresolved symbols, generator failures, missing constants, and missing runtime/data edges based on the actual build output
+4. only then patch the next blockers revealed by compile feedback

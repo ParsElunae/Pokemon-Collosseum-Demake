@@ -638,3 +638,6 @@ gSpecials::
 	def_special UpdateTrainerCardPhotoIcons
 	def_special StickerManGetBragFlags
 	def_special CheckAddCoins
+
+@ Colosseum bootstrap specials
+	.include "data/scripts/colosseum/colosseum_specials.inc"
