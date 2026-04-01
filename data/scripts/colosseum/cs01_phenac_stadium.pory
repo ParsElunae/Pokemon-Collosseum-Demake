@@ -1,0 +1,31 @@
+#include "constants/colosseum_cs01.h"
+
+const LOCALID_STADIUM_GUIDE = 1
+
+mapscripts PhenacStadium_MapScripts {}
+
+script PhenacStadium_EventScript_Guide {
+    lock
+    faceplayer
+
+    if (!flag(FLAG_COLO_CS01_STADIUM_CHECK_DONE)) {
+        msgbox(PhenacStadium_Text_FirstVisit)
+        setflag(FLAG_COLO_CS01_STADIUM_CHECK_DONE)
+        setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_STADIUM_CHECK_DONE)
+        special(ColoContent_ApplyStep)
+        setvar(VAR_COLO_CS01_SCENE_REQUEST, COLO_CS01_SCENE_SNAGEM_REVEAL)
+    } else {
+        msgbox(PhenacStadium_Text_RepeatVisit)
+    }
+
+    release
+    end
+}
+
+text PhenacStadium_Text_FirstVisit {
+    format("The stadium isn't helping you right now.\nIf you're looking for answers, you'll have to keep searching the city.")
+}
+
+text PhenacStadium_Text_RepeatVisit {
+    format("No new lead here.\nThe trouble in Phenac is somewhere else.")
+}
