@@ -1,0 +1,24 @@
+diff --git a/data/specials.inc b/data/specials.inc
+--- a/data/specials.inc
++++ b/data/specials.inc
+@@
++	.include "data/scripts/colosseum/colosseum_specials.inc"
++
+ diff --git a/data/event_scripts.s b/data/event_scripts.s
+--- a/data/event_scripts.s
++++ b/data/event_scripts.s
+@@
++	.include "data/scripts/colosseum/colosseum_map_scripts.inc"
++
+ diff --git a/data/maps/map_groups.json b/data/maps/map_groups.json
+--- a/data/maps/map_groups.json
++++ b/data/maps/map_groups.json
+@@
+-  "gMapGroup_SpecialArea": [
++  "gMapGroup_SpecialArea": [
++    "OutskirtStand",
++    "PhenacCity",
++    "PhenacMayorHouse",
++    "PhenacStadium",
++    "PhenacPokeMart",
++    "PrestigePreceptCenter",
