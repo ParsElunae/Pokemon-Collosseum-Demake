@@ -15,7 +15,7 @@
   "connections": [],
   "object_events": [
     {
-      "local_id": "1",
+      "local_id": "LOCALID_COLO_SACK",
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
       "x": 12,
       "y": 12,
@@ -29,7 +29,7 @@
       "flag": "0"
     },
     {
-      "local_id": "2",
+      "local_id": "LOCALID_COLO_RETURN_MESSENGER",
       "graphics_id": "OBJ_EVENT_GFX_WOMAN_4",
       "x": 10,
       "y": 14,
@@ -43,7 +43,7 @@
       "flag": "0"
     },
     {
-      "local_id": "5",
+      "local_id": "LOCALID_COLO_EXIT_GUARD_RED",
       "graphics_id": "OBJ_EVENT_GFX_MAN_5",
       "x": 5,
       "y": 20,
@@ -57,7 +57,7 @@
       "flag": "0"
     },
     {
-      "local_id": "6",
+      "local_id": "LOCALID_COLO_EXIT_GUARD_BLUE",
       "graphics_id": "OBJ_EVENT_GFX_MAN_5",
       "x": 20,
       "y": 20,
@@ -71,7 +71,7 @@
       "flag": "0"
     },
     {
-      "local_id": "7",
+      "local_id": "LOCALID_COLO_EXIT_GUARD_GREEN",
       "graphics_id": "OBJ_EVENT_GFX_MAN_5",
       "x": 12,
       "y": 24,
