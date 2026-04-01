@@ -1,0 +1,263 @@
+#include "constants/colosseum_cs01.h"
+
+const LOCALID_SACK = 1
+const LOCALID_CITIZEN_A = 2
+const LOCALID_CITIZEN_B = 3
+const LOCALID_RETURN_MESSENGER = 4
+const LOCALID_EXIT_RED = 5
+const LOCALID_EXIT_BLUE = 6
+const LOCALID_EXIT_GREEN = 7
+
+mapscripts PhenacCity_MapScripts {
+    MAP_SCRIPT_ON_FRAME_TABLE [
+        VAR_COLO_CS01_SCENE_REQUEST, COLO_CS01_SCENE_PHENAC_ARRIVAL: PhenacCity_EventScript_ArrivalScene
+        VAR_COLO_CS01_SCENE_REQUEST, COLO_CS01_SCENE_SNAGEM_REVEAL: PhenacCity_EventScript_SnagemRevealScene
+        VAR_COLO_CS01_SCENE_REQUEST, COLO_CS01_SCENE_RETURN_FROM_OUTSKIRT: PhenacCity_EventScript_ReturnFromOutskirt
+    ]
+}
+
+script PhenacCity_EventScript_ArrivalScene {
+    lockall
+    msgbox(PhenacCity_Text_FollyTrudlyArrival)
+    trainerbattle_double(
+        TRAINER_COLO_SHADY_GUYS_FOLLY_TRUDLY_ENTRANCE,
+        PhenacCity_Text_FollyTrudlyIntro,
+        PhenacCity_Text_FollyTrudlyDefeat,
+        PhenacCity_Text_NotEnoughMons,
+        PhenacCity_EventScript_AfterEntranceBattle
+    )
+    end
+}
+
+script PhenacCity_EventScript_AfterEntranceBattle {
+    lockall
+    showobject(LOCALID_SACK)
+    msgbox(PhenacCity_Text_CitizensTellYouToUntieSack)
+    setvar(VAR_COLO_CS01_SCENE_REQUEST, COLO_CS01_SCENE_NONE)
+    releaseall
+    end
+}
+
+script PhenacCity_EventScript_Sack {
+    lockall
+    if (flag(FLAG_COLO_CS01_RUI_FREED)) {
+        msgbox(PhenacCity_Text_EmptySack)
+        releaseall
+        end
+    }
+
+    msgbox(PhenacCity_Text_UntieSackPrompt, MSGBOX_YESNO)
+    if (var(VAR_RESULT) == 0) {
+        msgbox(PhenacCity_Text_UntieSackRefused)
+        releaseall
+        end
+    }
+
+    hideobject(LOCALID_SACK)
+    msgbox(PhenacCity_Text_RuiFreed)
+    setflag(FLAG_COLO_CS01_RUI_FREED)
+    setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_RUI_JOINED)
+    special(ColoContent_ApplyStep)
+    releaseall
+    end
+}
+
+script PhenacCity_EventScript_ReturnFromOutskirt {
+    lockall
+    applymovement(LOCALID_RETURN_MESSENGER, moves(walk_left * 2, face_player))
+    waitmovement(0)
+    msgbox(PhenacCity_Text_ReturnMessenger)
+    setvar(VAR_COLO_CS01_SCENE_REQUEST, COLO_CS01_SCENE_NONE)
+    releaseall
+    end
+}
+
+script PhenacCity_EventScript_SnagemRevealScene {
+    lockall
+    msgbox(PhenacCity_Text_SnagemOldMenApproach)
+    trainerbattle_double(
+        TRAINER_COLO_TEAM_SNAGEM_WAKIN,
+        PhenacCity_Text_WakinIntro,
+        PhenacCity_Text_WakinDefeat,
+        PhenacCity_Text_NotEnoughMons,
+        PhenacCity_EventScript_AfterWakin
+    )
+    end
+}
+
+script PhenacCity_EventScript_AfterWakin {
+    lockall
+    setflag(FLAG_COLO_CS01_SNAGEM_REVEAL_DONE)
+    setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_SNAGEM_REVEAL_DONE)
+    special(ColoContent_ApplyStep)
+    msgbox(PhenacCity_Text_SnagMachineReveal)
+    setvar(VAR_COLO_CS01_SCENE_REQUEST, COLO_CS01_SCENE_NONE)
+    releaseall
+    end
+}
+
+script PhenacCity_EventScript_GuardRed {
+    lock
+    faceplayer
+    if (flag(FLAG_COLO_CS01_EXIT_GUARD_CLEARED)) {
+        msgbox(PhenacCity_Text_GuardClearedFlavor)
+        release
+        end
+    }
+
+    setvar(VAR_COLO_CS01_SHADOW_HOOK, COLO_CS01_SHADOW_QUILAVA)
+    special(ColoShadow_QueueEncounterHook)
+    trainerbattle_double(
+        TRAINER_COLO_MYSTERY_TROOP_ROSSO,
+        PhenacCity_Text_RossoIntro,
+        PhenacCity_Text_RossoDefeat,
+        PhenacCity_Text_NotEnoughMons,
+        PhenacCity_EventScript_AfterExitGuard
+    )
+    end
+}
+
+script PhenacCity_EventScript_GuardBlue {
+    lock
+    faceplayer
+    if (flag(FLAG_COLO_CS01_EXIT_GUARD_CLEARED)) {
+        msgbox(PhenacCity_Text_GuardClearedFlavor)
+        release
+        end
+    }
+
+    setvar(VAR_COLO_CS01_SHADOW_HOOK, COLO_CS01_SHADOW_CROCONAW)
+    special(ColoShadow_QueueEncounterHook)
+    trainerbattle_double(
+        TRAINER_COLO_MYSTERY_TROOP_BLUNO,
+        PhenacCity_Text_BlunoIntro,
+        PhenacCity_Text_BlunoDefeat,
+        PhenacCity_Text_NotEnoughMons,
+        PhenacCity_EventScript_AfterExitGuard
+    )
+    end
+}
+
+script PhenacCity_EventScript_GuardGreen {
+    lock
+    faceplayer
+    if (flag(FLAG_COLO_CS01_EXIT_GUARD_CLEARED)) {
+        msgbox(PhenacCity_Text_GuardClearedFlavor)
+        release
+        end
+    }
+
+    setvar(VAR_COLO_CS01_SHADOW_HOOK, COLO_CS01_SHADOW_BAYLEEF)
+    special(ColoShadow_QueueEncounterHook)
+    trainerbattle_double(
+        TRAINER_COLO_MYSTERY_TROOP_VERDE,
+        PhenacCity_Text_VerdeIntro,
+        PhenacCity_Text_VerdeDefeat,
+        PhenacCity_Text_NotEnoughMons,
+        PhenacCity_EventScript_AfterExitGuard
+    )
+    end
+}
+
+script PhenacCity_EventScript_AfterExitGuard {
+    lockall
+    if (!flag(FLAG_COLO_CS01_EXIT_GUARD_CLEARED)) {
+        setflag(FLAG_COLO_CS01_EXIT_GUARD_CLEARED)
+        setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_EXIT_GUARD_CLEARED)
+        special(ColoContent_ApplyStep)
+        setflag(FLAG_COLO_CS01_SLICE_COMPLETE)
+        setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_SLICE_COMPLETE)
+        special(ColoContent_ApplyStep)
+    }
+    msgbox(PhenacCity_Text_ExitGuardClear)
+    releaseall
+    end
+}
+
+text PhenacCity_Text_FollyTrudlyArrival {
+    format("Those two goons drop the sack the moment they notice Wes.\nSomething in that bag is moving.")
+}
+
+text PhenacCity_Text_FollyTrudlyIntro {
+    format("You saw too much! We'll squash you right here!")
+}
+
+text PhenacCity_Text_FollyTrudlyDefeat {
+    format("You ruined the snatch job!")
+}
+
+text PhenacCity_Text_CitizensTellYouToUntieSack {
+    format("They're gone! Hurry-untie that sack!")
+}
+
+text PhenacCity_Text_UntieSackPrompt {
+    format("The sack is wriggling.\nUntie it?")
+}
+
+text PhenacCity_Text_UntieSackRefused {
+    format("Something in the bag struggles weakly.\nLeaving it like this doesn't feel right.")
+}
+
+text PhenacCity_Text_RuiFreed {
+    format("The sack opens and Rui stumbles out.\nShe insists on coming with Wes to the mayor.")
+}
+
+text PhenacCity_Text_EmptySack {
+    format("The sack is empty now.")
+}
+
+text PhenacCity_Text_ReturnMessenger {
+    format("Thank goodness you're back!\nSomething terrible is happening at the mayor's house!")
+}
+
+text PhenacCity_Text_SnagemOldMenApproach {
+    format("Three old Team Snagem men corner Wes on the way back.\nRui realizes Wes used to be one of them.")
+}
+
+text PhenacCity_Text_WakinIntro {
+    format("You're the traitor who stole the Snag Machine!\nLet's see if you're still worth anything.")
+}
+
+text PhenacCity_Text_WakinDefeat {
+    format("What? You still battle like a Snagem ace?")
+}
+
+text PhenacCity_Text_SnagMachineReveal {
+    format("Rui pieces it together: the machine on Wes's arm steals Pokemon.\nBut Phenac has no Poke Balls for sale-Outskirt Stand still does.")
+}
+
+text PhenacCity_Text_VerdeIntro {
+    format("No one's leaving Phenac with our Shadow Pokemon still in play!")
+}
+
+text PhenacCity_Text_VerdeDefeat {
+    format("No! Not Bayleef!")
+}
+
+text PhenacCity_Text_BlunoIntro {
+    format("Try to leave and you'll get crushed by my Shadow Croconaw!")
+}
+
+text PhenacCity_Text_BlunoDefeat {
+    format("My Croconaw... how did you do that?")
+}
+
+text PhenacCity_Text_RossoIntro {
+    format("You want out? Then get through my Shadow Quilava first!")
+}
+
+text PhenacCity_Text_RossoDefeat {
+    format("No! Quilava was supposed to stop you!")
+}
+
+text PhenacCity_Text_ExitGuardClear {
+    format("The pressure around Phenac finally breaks.\nWes and Rui can move on toward the Construction Lot.")
+}
+
+text PhenacCity_Text_GuardClearedFlavor {
+    format("The early lockdown is over.\nPhenac's exits are no longer under that first Shadow trap.")
+}
+
+text PhenacCity_Text_NotEnoughMons {
+    format("You need at least two battle-ready Pokemon for Colosseum-style battles.")
+}
