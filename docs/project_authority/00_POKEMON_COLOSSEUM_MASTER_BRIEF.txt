@@ -1,0 +1,103 @@
+POKEMON COLOSSEUM GBA DEMAKE — MASTER BRIEF
+STATUS: FINAL LIVE AUTHORITY
+DATE: 2026-03-29
+
+PURPOSE
+This file is the short, high-priority overview for the whole project.
+Any chat or tool working on this project should read this file first.
+It states the non-negotiable identity rules, authority order, and working method.
+
+CORE PROJECT IDENTITY
+- This project is a Pokémon Colosseum demake built in a Pokémon Emerald decomp workflow.
+- The target is a GBA-form translation of Pokémon Colosseum.
+- The Emerald decomp is the engine.
+- Pokémon Colosseum is the design authority.
+- If something cannot be copied 1:1 because of GBA limits, preserve its function, tone, and player feel as closely as possible.
+- When forced to choose, choose Colosseum fidelity over Emerald convenience.
+
+BUILD STACK
+- Base repo: pokeemerald / pokeemerald-expansion
+- Primary map editor: Porymap
+- Primary scripting layer: Poryscript
+- Hex Maniac Advance is helper-only, not the source of truth
+- Windows workflow target: WSL2
+
+LIVE AUTHORITY ORDER
+1. This file
+2. 01_POKEMON_COLOSSEUM_MASTER_STATE.txt
+3. 02_POKEMON_COLOSSEUM_MASTER_CANON_AND_SYSTEMS.txt
+4. 03_POKEMON_COLOSSEUM_MASTER_TABLES_AND_APPENDICES.zip / patched version
+
+If older packs, phase files, sprint files, or earlier merged files conflict with the master stack, the master stack wins.
+If a corrected/patched version conflicts with an older version, the corrected version wins.
+
+LOCKED GAME ARCHITECTURE
+Content Modes:
+- Faithful
+- Purified
+
+Difficulty:
+- Standard
+- Challenge
+
+QoL:
+- Off
+- On (Faithful only)
+
+Challenge is a difficulty layer, not a separate content mode.
+QoL is a Faithful-only helper layer.
+Normal GBA demake responsiveness/usability is part of the base project, not special QoL.
+
+NON-NEGOTIABLE FAITHFUL RULES
+Faithful Mode must preserve:
+- no normal wild Pokémon
+- the same overall Colosseum story/progression backbone
+- the same Shadow backbone
+- the same Relic Stone-centered purification identity
+- Wes + Espeon + Umbreon opening
+- Double-Battle-first identity wherever Colosseum supports it
+- Colosseum-style destination travel
+- full Shadow system
+- full purification identity
+- P★DA feel
+- Mt. Battle as required content
+
+PURIFIED RULES
+Purified Mode is the lore-friendly expanded mode.
+It must:
+- keep the main Colosseum story spine recognizable
+- keep Shadow Pokémon as the core identity
+- keep Relic Stone purification identity intact
+- avoid turning Orre into a normal wild-route region
+- use the phased Mt. Battle preserve as the main wild-catch expansion space
+- remain clearly separated from Faithful
+
+CORE IDENTITY PILLARS
+The game must still feel like Colosseum.
+Preserve:
+- Double-Battle-first identity
+- Wes + Espeon + Umbreon opening
+- full Shadow system
+- full purification identity
+- exact Shadow progression backbone
+- P★DA feel
+- Team Snagem intro identity
+- Mt. Battle as required content
+
+WORKING METHOD
+- Read project files first and treat them as source-of-truth.
+- Prefer structured files, specs, manifests, and full replacements over vague notes.
+- Surface conflicts with locked rules instead of drifting.
+- Keep outputs machine-readable where practical.
+- Prefer modular work passes over giant unfocused passes.
+- Do not casually overwrite locked canon.
+- Do not default to generic Emerald assumptions.
+
+VERIFICATION RULE
+For every development, audit, correction, or design task in this project, deeply verify exact Pokémon Colosseum canon and any relevant current toolchain details against authoritative sources before locking outputs.
+Do not rely on vague memory when exactness matters.
+If an accepted file or earlier phase drifts from verified Colosseum facts, correct or replace it rather than preserving the drift.
+
+CURRENT PROJECT STAGE
+The foundation, architecture, correction, consolidation, and implementation scaffolding passes are complete.
+The project is now in content-production / repo-application / playable-slice work.
