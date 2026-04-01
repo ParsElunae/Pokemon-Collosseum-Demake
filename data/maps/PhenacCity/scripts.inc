@@ -40,7 +40,7 @@ PhenacCity_Text_SackStub:
 
 PhenacCity_Text_ReturnStub:
 	.string "Bootstrap stub: this scene should push urgency after\n"
-	.string "the Outskirt Pok\'e Ball trip.$"
+	.string "the Outskirt Poke Ball trip.$"
 
 PhenacCity_Text_GuardRedStub:
 	.string "Bootstrap stub: red exit guard = Shadow Quilava.$"

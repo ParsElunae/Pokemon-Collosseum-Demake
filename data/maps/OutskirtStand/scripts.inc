@@ -25,7 +25,7 @@ OutskirtStand_Text_WillieStub:
 	.string "matching Poryscript source file.$"
 
 OutskirtStand_Text_BartenderStub:
-	.string "Bootstrap stub: the bartender's Pok\'e Ball gift and\n"
+	.string "Bootstrap stub: the bartender's Poke Ball gift and\n"
 	.string "shop logic belong here once the Colosseum runtime\l"
 	.string "hooks are wired into the build.$"
 
