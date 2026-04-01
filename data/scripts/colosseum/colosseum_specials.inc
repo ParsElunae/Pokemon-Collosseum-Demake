@@ -1,0 +1,3 @@
+	def_special ColoContent_ApplyStep
+	def_special ColoShadow_QueueEncounterHook
+	def_special ColoPda_ApplyHookFromVar
