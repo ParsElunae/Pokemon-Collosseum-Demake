@@ -48,6 +48,8 @@
 #include "union_room_chat.h"
 #include "constants/map_groups.h"
 #include "constants/items.h"
+#include "constants/species.h"
+#include "constants/colosseum_cs01.h"
 #include "difficulty.h"
 #include "follower_npc.h"
 
@@ -56,6 +58,8 @@ extern const u8 EventScript_ResetAllMapFlagsFrlg[];
 
 static void ClearFrontierRecord(void);
 static void WarpToTruck(void);
+static void WarpToColosseumStart(void);
+static void SeedColosseumOpeningParty(void);
 static void ResetMiniGamesRecords(void);
 static void ResetItemFlags(void);
 static void ResetDexNav(void);
@@ -132,13 +136,25 @@ static void ClearFrontierRecord(void)
     gSaveBlock2Ptr->frontier.opponentNames[1][0] = EOS;
 }
 
+static void WarpToColosseumStart(void)
+{
+    SetWarpDestination(MAP_GROUP(MAP_OUTSKIRT_STAND), MAP_NUM(MAP_OUTSKIRT_STAND), WARP_ID_NONE, 11, 9);
+}
+
 static void WarpToTruck(void)
 {
     if (IS_FRLG)
         SetWarpDestination(MAP_GROUP(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), MAP_NUM(MAP_PALLET_TOWN_PLAYERS_HOUSE_2F), WARP_ID_NONE, 6, 6);
     else
-        SetWarpDestination(MAP_GROUP(MAP_INSIDE_OF_TRUCK), MAP_NUM(MAP_INSIDE_OF_TRUCK), WARP_ID_NONE, -1, -1);
+        WarpToColosseumStart();
     WarpIntoMap();
+}
+
+static void SeedColosseumOpeningParty(void)
+{
+    CreateMon(&gPlayerParty[0], SPECIES_ESPEON, 25, 32, OTID_STRUCT_PLAYER_ID);
+    CreateMon(&gPlayerParty[1], SPECIES_UMBREON, 26, 64, OTID_STRUCT_PLAYER_ID);
+    gPlayerPartyCount = CalculatePlayerPartyCount();
 }
 
 void Sav2_ClearSetDefault(void)
@@ -232,6 +248,16 @@ void NewGameInitData(void)
     ResetItemFlags();
     ResetDexNav();
     ClearFollowerNPCData();
+
+    if (!IS_FRLG)
+    {
+        VarSet(VAR_COLO_CS01_SCENE_REQUEST, COLO_CS01_SCENE_NONE);
+        VarSet(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_OPENING_HANDOFF_DONE);
+        VarSet(VAR_COLO_CS01_SHADOW_HOOK, COLO_CS01_SHADOW_NONE);
+        VarSet(VAR_COLO_CS01_PDA_HOOK, COLO_CS01_PDA_HOOK_NONE);
+        VarSet(VAR_COLO_CS01_TRAVEL_UNLOCK, COLO_CS01_TRAVEL_UNLOCK_NONE);
+        SeedColosseumOpeningParty();
+    }
 }
 
 static void ResetMiniGamesRecords(void)
