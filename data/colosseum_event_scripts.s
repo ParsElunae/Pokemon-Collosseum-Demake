@@ -1,6 +1,7 @@
 #include "constants/global.h"
 #include "constants/flags.h"
 #include "constants/items.h"
+#include "constants/map_scripts.h"
 #include "constants/maps.h"
 #include "constants/vars.h"
 	.include "asm/macros.inc"
