@@ -537,6 +537,7 @@
   ],
   "gMapGroup_SpecialArea": [
     "OutskirtStand",
+    "OutskirtStandInterior",
     "PhenacCity",
     "PhenacMayorHouse",
     "PhenacStadium",

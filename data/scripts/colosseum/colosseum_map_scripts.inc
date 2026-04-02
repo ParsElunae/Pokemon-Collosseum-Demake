@@ -1,4 +1,5 @@
 	.include "data/maps/OutskirtStand/scripts.inc"
+	.include "data/maps/OutskirtStandInterior/scripts.inc"
 	.include "data/maps/PhenacCity/scripts.inc"
 	.include "data/maps/PhenacMayorHouse/scripts.inc"
 	.include "data/maps/PhenacStadium/scripts.inc"

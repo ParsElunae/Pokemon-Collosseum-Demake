@@ -1,0 +1,88 @@
+#include "constants/colosseum_cs01.h"
+
+const LOCALID_BARTENDER = 1
+const LOCALID_WILLIE = 2
+
+mapscripts OutskirtStandInterior_MapScripts {
+    MAP_SCRIPT_ON_TRANSITION: OutskirtStandInterior_OnTransition
+}
+
+script OutskirtStandInterior_OnTransition {
+    if (flag(FLAG_TEMP_17) || flag(FLAG_COLO_CS01_WILLIE_CLEARED)) {
+        setflag(FLAG_TEMP_20)
+    } else {
+        clearflag(FLAG_TEMP_20)
+    }
+    end
+}
+
+script OutskirtStandInterior_EventScript_NewsTrigger {
+    if (flag(FLAG_TEMP_16)) {
+        end
+    }
+
+    lockall
+    msgbox(OutskirtStandInterior_Text_NewsReport)
+    setflag(FLAG_TEMP_16)
+    releaseall
+    end
+}
+
+script OutskirtStandInterior_EventScript_Tv {
+    msgbox(OutskirtStandInterior_Text_Tv)
+    end
+}
+
+script OutskirtStandInterior_EventScript_Bartender {
+    lock
+    faceplayer
+    pokemart(OutskirtStandInterior_OpeningMart)
+    msgbox(OutskirtStandInterior_Text_BartenderAfterShop)
+    release
+    end
+}
+
+script OutskirtStandInterior_EventScript_Willie {
+    lock
+    faceplayer
+
+    if (!flag(FLAG_TEMP_17)) {
+        msgbox(OutskirtStandInterior_Text_WillieFirstTalk)
+        setflag(FLAG_TEMP_17)
+        setflag(FLAG_TEMP_18)
+        release
+        end
+    }
+
+    msgbox(OutskirtStandInterior_Text_WillieRepeat)
+    release
+    end
+}
+
+mart OutskirtStandInterior_OpeningMart {
+    ITEM_ANTIDOTE
+    ITEM_AWAKENING
+    ITEM_BURN_HEAL
+    ITEM_ICE_HEAL
+    ITEM_PARALYZE_HEAL
+}
+
+text OutskirtStandInterior_Text_NewsReport {
+    format("The television is carrying a breaking news report out of Phenac City.")
+}
+
+text OutskirtStandInterior_Text_Tv {
+    format("The report keeps circling back to trouble in Phenac City.")
+}
+
+text OutskirtStandInterior_Text_BartenderAfterShop {
+    format("Take what you need and move on.")
+}
+
+text OutskirtStandInterior_Text_WillieFirstTalk {
+    format("If you want to show what your team can do, come meet me outside.")
+}
+
+text OutskirtStandInterior_Text_WillieRepeat {
+    format("I'm heading outside.\nDon't keep me waiting.")
+}

@@ -1,117 +1,62 @@
 #include "constants/colosseum_cs01.h"
 
 const LOCALID_WILLIE = 1
-const LOCALID_BARTENDER = 2
-const LOCALID_BALL_SIGN = 3
+const LOCALID_SIGN = 2
 
 mapscripts OutskirtStand_MapScripts {
     MAP_SCRIPT_ON_TRANSITION: OutskirtStand_OnTransition
 }
 
 script OutskirtStand_OnTransition {
-    if (!var(VAR_COLO_CS01_CONTENT_STEP)) {
-        setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_OPENING_HANDOFF_DONE)
-        special(ColoContent_ApplyStep)
+    if (flag(FLAG_TEMP_18) || flag(FLAG_COLO_CS01_WILLIE_CLEARED)) {
+        clearflag(FLAG_TEMP_19)
+    } else {
+        setflag(FLAG_TEMP_19)
     }
     end
 }
 
 script OutskirtStand_EventScript_Willie {
-    trainerbattle_double(
-        TRAINER_COLO_RIDER_WILLIE,
-        OutskirtStand_Text_WillieIntro,
-        OutskirtStand_Text_WillieDefeat,
-        OutskirtStand_Text_NotEnoughMons,
-        OutskirtStand_EventScript_AfterWillie
-    )
-    end
-}
-
-script OutskirtStand_EventScript_AfterWillie {
     lock
     faceplayer
+
+    if (!flag(FLAG_TEMP_18)) {
+        msgbox(OutskirtStand_Text_WillieNotReady)
+        release
+        end
+    }
+
     if (!flag(FLAG_COLO_CS01_WILLIE_CLEARED)) {
+        msgbox(OutskirtStand_Text_WillieBattleStub)
         setflag(FLAG_COLO_CS01_WILLIE_CLEARED)
         setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_WILLIE_CLEARED)
         special(ColoContent_ApplyStep)
     }
+
     msgbox(OutskirtStand_Text_WillieAfterBattle)
     release
     end
 }
 
-script OutskirtStand_EventScript_Bartender {
+script OutskirtStand_EventScript_Sign {
     lock
-    faceplayer
-
-    if (flag(FLAG_COLO_CS01_SNAGEM_REVEAL_DONE) && !flag(FLAG_COLO_CS01_OUTSKIRT_BALLS_RECEIVED)) {
-        msgbox(OutskirtStand_Text_BartenderFreeBalls)
-        giveitem(ITEM_POKE_BALL, 5)
-        setflag(FLAG_COLO_CS01_OUTSKIRT_BALLS_RECEIVED)
-        setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_OUTSKIRT_BALLS_OBTAINED)
-        special(ColoContent_ApplyStep)
-        pokemart(OutskirtStand_BallMart)
-        msgbox(OutskirtStand_Text_BartenderShopAfterGift)
-        release
-        end
-    }
-
-    if (flag(FLAG_COLO_CS01_SNAGEM_REVEAL_DONE)) {
-        msgbox(OutskirtStand_Text_BartenderShopPrompt)
-        pokemart(OutskirtStand_BallMart)
-        msgbox(OutskirtStand_Text_BartenderShopAfterGift)
-    } else {
-        msgbox(OutskirtStand_Text_BartenderFlavor)
-    }
-
+    msgbox(OutskirtStand_Text_Sign)
     release
     end
 }
 
-script OutskirtStand_EventScript_BallSign {
-    lock
-    msgbox(OutskirtStand_Text_BallSign)
-    release
-    end
+text OutskirtStand_Text_WillieNotReady {
+    format("The stand is quiet for the moment.\nNo one is waiting outside yet.")
 }
 
-mart OutskirtStand_BallMart {
-    ITEM_POKE_BALL
-    ITEM_GREAT_BALL
-}
-
-text OutskirtStand_Text_WillieIntro {
-    format("Hey! You there! Let's see what kind of Trainer you are!")
-}
-
-text OutskirtStand_Text_WillieDefeat {
-    format("Yow! You're no ordinary Trainer.")
+text OutskirtStand_Text_WillieBattleStub {
+    format("Willie steps out from the stand and sizes you up.\nHis first live outside battle still needs trainer data in this repo pass.")
 }
 
 text OutskirtStand_Text_WillieAfterBattle {
-    format("Not bad at all. If you want to sharpen your skills, go try Phenac City.\nThat's where the big people gather.")
+    format("Not bad.\nIf you're looking for a real destination, head for Phenac City next.")
 }
 
-text OutskirtStand_Text_BartenderFlavor {
-    format("This isn't the kind of place people visit unless they have a reason.\nStill, take it easy while you're here.")
-}
-
-text OutskirtStand_Text_BartenderFreeBalls {
-    format("Poké Balls, huh? Around here, those aren't easy to come by.\nTake these five. You'll need them more than I do.")
-}
-
-text OutskirtStand_Text_BartenderShopPrompt {
-    format("Need more balls? Fine by me. Buy what you need and don't waste them.")
-}
-
-text OutskirtStand_Text_BartenderShopAfterGift {
-    format("Catch what needs catching. Then finish what you started.")
-}
-
-text OutskirtStand_Text_BallSign {
-    format("OUTSKIRT STAND\nA lonely stop in the desert.")
-}
-
-text OutskirtStand_Text_NotEnoughMons {
-    format("You need at least two Pokémon to keep up with the way battles are fought around here.")
+text OutskirtStand_Text_Sign {
+    format("OUTSKIRT STAND")
 }
