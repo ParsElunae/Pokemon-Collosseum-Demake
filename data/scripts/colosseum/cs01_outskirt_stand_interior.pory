@@ -9,9 +9,9 @@ mapscripts OutskirtStandInterior_MapScripts {
 
 script OutskirtStandInterior_OnTransition {
     if (flag(FLAG_TEMP_17) || flag(FLAG_COLO_CS01_WILLIE_CLEARED)) {
-        setflag(FLAG_TEMP_20)
+        setflag(FLAG_TEMP_1A)
     } else {
-        clearflag(FLAG_TEMP_20)
+        clearflag(FLAG_TEMP_1A)
     }
     end
 }

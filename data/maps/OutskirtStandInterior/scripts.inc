@@ -5,11 +5,11 @@ OutskirtStandInterior_MapScripts::
 OutskirtStandInterior_OnTransition:
 	goto_if_set FLAG_TEMP_17, OutskirtStandInterior_HideWillie
 	goto_if_set FLAG_TEMP_1, OutskirtStandInterior_HideWillie
-	clearflag FLAG_TEMP_20
+	clearflag FLAG_TEMP_1A
 	end
 
 OutskirtStandInterior_HideWillie:
-	setflag FLAG_TEMP_20
+	setflag FLAG_TEMP_1A
 	end
 
 OutskirtStandInterior_EventScript_NewsTrigger::
