@@ -16,6 +16,19 @@ script OutskirtStand_OnTransition {
     end
 }
 
+script OutskirtStand_EventScript_ExitBattleTrigger {
+    if (!flag(FLAG_TEMP_18) || flag(FLAG_COLO_CS01_WILLIE_CLEARED)) {
+        end
+    }
+
+    lockall
+    applymovement(LOCALID_WILLIE, OutskirtStand_Movement_WillieStepUp)
+    waitmovement(0)
+    call(OutskirtStand_EventScript_DoWillieEncounter)
+    releaseall
+    end
+}
+
 script OutskirtStand_EventScript_Willie {
     lock
     faceplayer
@@ -27,10 +40,9 @@ script OutskirtStand_EventScript_Willie {
     }
 
     if (!flag(FLAG_COLO_CS01_WILLIE_CLEARED)) {
-        msgbox(OutskirtStand_Text_WillieBattleStub)
-        setflag(FLAG_COLO_CS01_WILLIE_CLEARED)
-        setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_WILLIE_CLEARED)
-        special(ColoContent_ApplyStep)
+        call(OutskirtStand_EventScript_DoWillieEncounter)
+        release
+        end
     }
 
     msgbox(OutskirtStand_Text_WillieAfterBattle)
@@ -38,11 +50,25 @@ script OutskirtStand_EventScript_Willie {
     end
 }
 
+script OutskirtStand_EventScript_DoWillieEncounter {
+    msgbox(OutskirtStand_Text_WillieBattleStub)
+    setflag(FLAG_COLO_CS01_WILLIE_CLEARED)
+    setvar(VAR_TEMP_2, 1)
+    setvar(VAR_COLO_CS01_CONTENT_STEP, COLO_CS01_STEP_WILLIE_CLEARED)
+    special(ColoContent_ApplyStep)
+    msgbox(OutskirtStand_Text_WillieAfterBattle)
+    return
+}
+
 script OutskirtStand_EventScript_Sign {
     lock
     msgbox(OutskirtStand_Text_Sign)
     release
     end
+}
+
+movement OutskirtStand_Movement_WillieStepUp {
+    walk_up
 }
 
 text OutskirtStand_Text_WillieNotReady {

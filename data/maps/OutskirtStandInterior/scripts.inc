@@ -17,6 +17,7 @@ OutskirtStandInterior_EventScript_NewsTrigger::
 	lockall
 	msgbox OutskirtStandInterior_Text_NewsReport, MSGBOX_DEFAULT
 	setflag FLAG_TEMP_16
+	setflag FLAG_TEMP_18
 	releaseall
 	end
 
@@ -24,7 +25,7 @@ OutskirtStandInterior_EventScript_NewsTriggerEnd::
 	end
 
 OutskirtStandInterior_EventScript_Tv::
-	msgbox OutskirtStandInterior_Text_Tv, MSGBOX_DEFAULT
+	msgbox OutskirtStandInterior_Text_Tv, MSGBOX_SIGN
 	end
 
 OutskirtStandInterior_EventScript_Bartender::
@@ -52,7 +53,6 @@ OutskirtStandInterior_EventScript_Willie::
 	goto_if_set FLAG_TEMP_17, OutskirtStandInterior_EventScript_WillieRepeat
 	msgbox OutskirtStandInterior_Text_WillieFirstTalk, MSGBOX_DEFAULT
 	setflag FLAG_TEMP_17
-	setflag FLAG_TEMP_18
 	release
 	end
 
@@ -70,9 +70,9 @@ OutskirtStandInterior_Text_Tv:
 	.string "in Phenac City.$"
 
 OutskirtStandInterior_Text_WillieFirstTalk:
-	.string "If you want to show what your team can do,\n"
-	.string "come meet me outside.$"
+	.string "Willie looks up from his table.\n"
+	.string "He seems ready to head back outside.$"
 
 OutskirtStandInterior_Text_WillieRepeat:
-	.string "I'm heading outside.\n"
-	.string "Don't keep me waiting.$"
+	.string "Willie glances toward the exit.\n"
+	.string "He looks like he's about to step outside.$"

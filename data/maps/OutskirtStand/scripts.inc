@@ -12,18 +12,36 @@ OutskirtStand_ShowWillie:
 	clearflag FLAG_TEMP_19
 	end
 
+OutskirtStand_EventScript_ExitBattleTrigger::
+	goto_if_unset FLAG_TEMP_18, OutskirtStand_EventScript_ExitBattleTriggerEnd
+	goto_if_set FLAG_TEMP_1, OutskirtStand_EventScript_ExitBattleTriggerEnd
+	lockall
+	applymovement LOCALID_COLO_WILLIE, OutskirtStand_Movement_WillieStepUp
+	waitmovement 0
+	call OutskirtStand_EventScript_DoWillieEncounter
+	releaseall
+	end
+
+OutskirtStand_EventScript_ExitBattleTriggerEnd::
+	end
+
 OutskirtStand_EventScript_Willie::
 	lock
 	faceplayer
 	goto_if_unset FLAG_TEMP_18, OutskirtStand_EventScript_WillieNotReady
 	goto_if_set FLAG_TEMP_1, OutskirtStand_EventScript_WillieAfterClear
+	call OutskirtStand_EventScript_DoWillieEncounter
+	release
+	end
+
+OutskirtStand_EventScript_DoWillieEncounter::
 	msgbox OutskirtStand_Text_WillieBattleStub, MSGBOX_DEFAULT
 	setflag FLAG_TEMP_1
+	setvar VAR_TEMP_2, 1
 	setvar VAR_TEMP_F, 2
 	special ColoContent_ApplyStep
 	msgbox OutskirtStand_Text_WillieAfterBattle, MSGBOX_DEFAULT
-	release
-	end
+	return
 
 OutskirtStand_EventScript_WillieAfterClear::
 	msgbox OutskirtStand_Text_WillieAfterBattle, MSGBOX_DEFAULT
@@ -38,6 +56,10 @@ OutskirtStand_EventScript_WillieNotReady::
 OutskirtStand_EventScript_Sign::
 	msgbox OutskirtStand_Text_Sign, MSGBOX_SIGN
 	end
+
+OutskirtStand_Movement_WillieStepUp:
+	walk_up
+	step_end
 
 OutskirtStand_Text_WillieNotReady:
 	.string "The stand is quiet for the moment.\n"

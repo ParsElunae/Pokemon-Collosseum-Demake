@@ -24,12 +24,13 @@ script OutskirtStandInterior_EventScript_NewsTrigger {
     lockall
     msgbox(OutskirtStandInterior_Text_NewsReport)
     setflag(FLAG_TEMP_16)
+    setflag(FLAG_TEMP_18)
     releaseall
     end
 }
 
 script OutskirtStandInterior_EventScript_Tv {
-    msgbox(OutskirtStandInterior_Text_Tv)
+    msgbox(OutskirtStandInterior_Text_Tv, MSGBOX_SIGN)
     end
 }
 
@@ -49,7 +50,6 @@ script OutskirtStandInterior_EventScript_Willie {
     if (!flag(FLAG_TEMP_17)) {
         msgbox(OutskirtStandInterior_Text_WillieFirstTalk)
         setflag(FLAG_TEMP_17)
-        setflag(FLAG_TEMP_18)
         release
         end
     }
@@ -80,9 +80,9 @@ text OutskirtStandInterior_Text_BartenderAfterShop {
 }
 
 text OutskirtStandInterior_Text_WillieFirstTalk {
-    format("If you want to show what your team can do, come meet me outside.")
+    format("Willie looks up from his table.\nHe seems ready to head back outside.")
 }
 
 text OutskirtStandInterior_Text_WillieRepeat {
-    format("I'm heading outside.\nDon't keep me waiting.")
+    format("Willie glances toward the exit.\nHe looks like he's about to step outside.")
 }
