@@ -1,4 +1,5 @@
 #include "constants/global.h"
+#include "constants/event_object_movement.h"
 #include "constants/flags.h"
 #include "constants/items.h"
 #include "constants/map_scripts.h"
